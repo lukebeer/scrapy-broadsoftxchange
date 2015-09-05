@@ -10,12 +10,17 @@ except ImportError:
     from io import BytesIO
 from scrapy.pipelines.files import FilesPipeline
 from scrapy.utils.misc import md5sum
+from scrapy.http import Request
+from urlparse import urlparse
 import os
 
 
 class SoftwarePipeline(FilesPipeline):
-    def file_downloaded(self, response, request, info):
-        path = self.file_path(request, response=response, info=info)
-        buf = BytesIO(response.body)
-        self.store.persist_file(path, buf, info)
-        return os.path.basename(path)
+
+    def file_path(self, request, response=None, info=None):
+        if not isinstance(request, Request):
+            url = request
+        else:
+            url = request.url
+        bits = urlparse(url)
+        return bits.netloc + bits.path

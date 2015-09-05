@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy import log
+from scrapy import spiders, log
 
 from broadsoftxchange.items import SoftwareItem
 from broadsoftxchange import settings
 
 
-class SoftwareSpider(scrapy.Spider):
+class SoftwareSpider(spiders.CrawlSpider):
     name = "software"
     http_user = settings.XCHANGE_USERNAME
     http_pass = settings.XCHANGE_PASSWORD
@@ -16,6 +16,7 @@ class SoftwareSpider(scrapy.Spider):
 
     def parse(self, response):
         headers = response.headers
+        self.log(headers)
         if headers['Content-Type'] != 'text/plain':
             self.log(response.url, level=scrapy.log.INFO)
             if not settings.DOWNLOAD_DRYRUN:
