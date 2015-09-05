@@ -2,13 +2,14 @@
 Crawler and downloader for Broadsoft's xchange to provide a local software and document collection.
 
 #### Nutshell
-> pip install scrapy
-
-> git clone https://github.com/lukebeer/scrapy-broadsoftxchange.git
-
-> set XCHANGE_USERNAME & XCHANGE_PASSWORD in broadsoftxchange/settings.py
-
-> scrapy crawl [software, documents]
+```
+bash-$ pip install scrapy
+bash-$ git clone https://github.com/lukebeer/scrapy-broadsoftxchange.git
+```
+*set username & password in broadsoftxchange/settings.py*
+```
+bash-$ scrapy crawl [software, documents]
+```
 
 #### Settings
 *broadsoftxchange/settings.py*
