@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-from scrapy.utils.misc import md5sum
-
 
 #  User configuration & settings
 XCHANGE_USERNAME = os.getenv('XCHANGE_USER', 'username@example.com')
