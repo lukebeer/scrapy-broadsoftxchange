@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 import os
 
+from scrapy.utils.misc import md5sum
+
 
 #  User configuration & settings
 XCHANGE_USERNAME = os.getenv('XCHANGE_USER', 'username@example.com')
 XCHANGE_PASSWORD = os.getenv('XCHANGE_PASS', 'password')
 LOG_ENABLED = True
 LOG_FILE = None
-LOG_FORMAT = '%(message)s'  #  '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
+LOG_FORMAT = '%(message)s'  # '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
 LOG_LEVEL = 'DEBUG'
 LOG_STDOUT = True
 DEPTH_STATS = False
