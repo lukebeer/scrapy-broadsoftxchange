@@ -15,18 +15,15 @@ class SoftwareSpider(spiders.CrawlSpider):
     ]
 
     def parse(self, response):
-        headers = response.headers
-        self.log(headers)
-        if headers['Content-Type'] != 'text/plain':
-            self.log(response.url, level=scrapy.log.INFO)
+        self.log(response.url, level=scrapy.log.INFO)
+        if response.headers['Content-Type'] != 'text/plain':
             if not settings.DOWNLOAD_DRYRUN:
                 yield SoftwareItem(file_urls=[response.url])
-        if headers['Content-Type'] == 'text/plain':
+        else:
             if 'Contents of this Folder:' in response.body:
                 for link in response.body.split('\n')[1:-1]:
-                    url = '%s/%s' % (response.url, link.strip())
-                    self.log(url, level=scrapy.log.INFO)
-                    yield scrapy.Request(url=url, method=settings.REQUEST_METHOD, callback=self.parse)
+                    next = '%s/%s' % (response.url, link.strip())
+                    yield scrapy.Request(url=next, method=settings.REQUEST_METHOD, callback=self.parse)
             else:
                 self.log(response.url, level=scrapy.log.INFO)
                 if not settings.DOWNLOAD_DRYRUN:

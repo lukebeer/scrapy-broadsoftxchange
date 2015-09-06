@@ -8,15 +8,19 @@ try:
     from cStringIO import StringIO as BytesIO
 except ImportError:
     from io import BytesIO
-from scrapy.pipelines.files import FilesPipeline
-from scrapy.utils.misc import md5sum
-from scrapy.http import Request
 from urlparse import urlparse
-import os
+
+from scrapy.pipelines.files import FilesPipeline
+
+try:
+    from cStringIO import StringIO as BytesIO
+except ImportError:
+    from io import BytesIO
+
+from scrapy.http import Request
 
 
 class SoftwarePipeline(FilesPipeline):
-
     def file_path(self, request, response=None, info=None):
         if not isinstance(request, Request):
             url = request
