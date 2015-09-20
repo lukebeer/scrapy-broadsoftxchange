@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='scrapy-broadsoftxchange',
-    version="1.4",
+    version="1.17",
     description="Download documents and published software from Broadsoft Xchange",
     long_description="",
     keywords='scrapy broadsoft broadworks xchange',
