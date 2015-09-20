@@ -1,6 +1,10 @@
 # scrapy-broadsoftxchange
 Crawler and downloader for Broadsoft's xchange to provide a local software and document collection.
 
+The software/doc bundles on xchange don't include everything and it's a pain to manually download.
+
+I personally use this to populate a documentation indexing and text mining engine for snappy searching.
+
 PyPI: https://pypi.python.org/pypi/scrapy-broadsoftxchange
 
 
