@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+import logging
+
 import scrapy
 from scrapy import spiders, linkextractors
+from scrapy.selector import Selector
 
 from broadsoftxchange.items import DocumentItem
 
@@ -10,11 +13,10 @@ class Documentation(spiders.CrawlSpider):
     allowed_domains = ['xchange.broadsoft.com']
     login_page = 'http://xchange.broadsoft.com/php/xchange/'
     start_urls = ['http://xchange.broadsoft.com/php/xchange/support/broadworks/documentation?page=1']
-
     rules = (
         spiders.Rule(
             linkextractors.LinkExtractor(allow=r'/php/xchange/support/broadworks/documentation\?page=[0-9]+',
-                                         unique=False, canonicalize=False),
+                                         unique=True, canonicalize=False),
             callback='parse_item',
             follow=True,
         ),
@@ -43,22 +45,24 @@ class Documentation(spiders.CrawlSpider):
             if 'Configure your rss feeds' in response.body:
                 self.log("Successfully logged in")
                 for url in self.start_urls:
-                    yield scrapy.Request(url=url, dont_filter=True)
+                    yield scrapy.Request(url=url)
         except:
             self.log("Login failed")
             return
 
     def parse_item(self, response):
         items = []
-        links = response.xpath("//tr[@class='odd rowclick even']|//tr[@class='even rowclick odd']")
+        hxs = Selector(response)
+        links = hxs.xpath("//tr[@class='odd rowclick even']|//tr[@class='even rowclick odd']")
         for row in links:
-            self.log(row)
             item = DocumentItem()
-            item['title'] = row.select("td[3]/a/text()").extract()
-            item['file'] = row.select("td[2]/a/@href").extract()
-            item['release'] = row.select("td[6]/text()").extract()
-            item['category'] = row.select("td[5]/text()").extract()
-            item['date'] = row.select('td[7]/text()').extract()
-            self.log(item)
+            item['title'] = row.xpath("./td[3]/a/text()").extract() or ['']
+            item['file_urls'] = row.xpath("td[2]/a/@href").extract() or None
+            item['release'] = row.xpath("td[6]/text()").extract() or ''
+            item['category'] = row.xpath("td[5]/text()").extract() or ''
+            item['date'] = row.xpath('td[7]/text()').extract() or ''
+            if not item['file_urls']:
+                continue
+            self.log(item['title'][0], logging.INFO)
             items.append(item)
         return items
