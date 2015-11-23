@@ -38,9 +38,9 @@ The default setting stores files in the users home dir. To change, set XCHANGE_S
 bash-$ export XCHANGE_STORE='/data/documents'
 ```
 
-Start the download for 'documents' or 'software'
+Start the download for 'documentation' or 'software'
 ```
-bash-$ scrapy crawl documents
+bash-$ scrapy crawl documentation
 2015-09-20 15:20:29 INFO: Scrapy 1.0.3 started (bot: scrapy-broadsoftxchange)
 2015-09-20 15:20:29 INFO: Optional features available: ssl, http11
 2015-09-20 15:20:29 INFO: Overridden settings: {'DOWNLOAD_TIMEOUT': 1800, 'REDIRECT_MAX_TIMES': 70, 'LOG_LEVEL': 'INFO', 'CONCURRENT_REQUESTS_PER_DOMAIN': 16, 'RANDOMIZE_DOWNLOAD_DELAY': False, 'DOWNLOAD_WARNSIZE': 1073741824, 'SPIDER_MODULES': ['broadsoftxchange.spiders'], 'LOG_STDOUT': True, 'CONCURRENT_REQUESTS_PER_IP': 16, 'BOT_NAME': 'scrapy-broadsoftxchange', 'DOWNLOAD_MAXSIZE': 4294967296, 'CONCURRENT_ITEMS': 32, 'RETRY_TIMES': 10, 'REACTOR_THREADPOOL_MAXSIZE': 16, 'TELNETCONSOLE_ENABLED': False, 'LOG_FORMAT': '%(asctime)s %(levelname)s: %(message)s', 'MEMUSAGE_ENABLED': True, 'USER_AGENT': 'scrapy-broadsoftxchange (+https://github.com/lukebeer/scrapy-broadsoftxchange)'}
