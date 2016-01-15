@@ -28,8 +28,8 @@ bash-$ export SCRAPY_SETTINGS_MODULE=broadsoftxchange.settings
 ```
 You can edit settings.py to include your credentials but it's much faster to just export vars as per below:
 ``` 
-bash-$ export XCHANGE_USERNAME='user@example.com'
-bash-$ export XCHANGE_PASSWORD='password'
+bash-$ export XCHANGE_USER='user@example.com'
+bash-$ export XCHANGE_PASS='password'
 ```
 
 ##### Optional
