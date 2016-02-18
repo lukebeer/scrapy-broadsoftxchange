@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-
+import psutil
 
 #  User configuration & settings
 XCHANGE_USERNAME = os.getenv('XCHANGE_USER', 'username@example.com')
@@ -15,7 +15,7 @@ DEPTH_STATS_VERBOSE = False
 DOWNLOADER_STATS = True
 MEMDEBUG_ENABLED = False
 MEMUSAGE_ENABLED = True
-MEMUSAGE_LIMIT_MB = 0
+MEMUSAGE_LIMIT_MB = int((1-5/100)*psutil.virtual_memory().free/(1024**2))
 AUTOTHROTTLE_DEBUG = False
 TELNETCONSOLE_ENABLED = False
 DOWNLOAD_TIMEOUT = 1800
