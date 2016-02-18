@@ -15,16 +15,24 @@ class SoftwareSpider(spiders.CrawlSpider):
     ]
 
     def parse(self, response):
-        self.log(response.url, level=scrapy.log.INFO)
-        if response.headers['Content-Type'] != 'text/plain':
-            if not settings.DOWNLOAD_DRYRUN:
-                yield SoftwareItem(file_urls=[response.url])
+        if settings.DOWNLOAD_DRYRUN is not False:
+            msg = "DRYRUN: %s" % response.url
         else:
+            msg = response.url
+        if response.headers['Content-Type'] == 'text/plain':
             if 'Contents of this Folder:' in response.body:
                 for link in response.body.split('\n')[1:-1]:
                     next = '%s/%s' % (response.url, link.strip())
-                    yield scrapy.Request(url=next, method=settings.REQUEST_METHOD, callback=self.parse)
-            else:
-                self.log(response.url, level=scrapy.log.INFO)
-                if not settings.DOWNLOAD_DRYRUN:
-                    yield SoftwareItem(file_urls=[response.url])
+                    if settings.BROADWORKS_RELEASE:
+                        if settings.BROADWORKS_RELEASE in next:
+                            yield scrapy.Request(url=next, method=settings.REQUEST_METHOD, callback=self.parse)
+                    else:
+                        yield scrapy.Request(url=next, method=settings.REQUEST_METHOD, callback=self.parse)
+        elif not settings.DOWNLOAD_DRYRUN:
+           if settings.BROADWORKS_RELEASE:
+               if settings.BROADWORKS_RELEASE in response.url:
+                   self.log(msg, level=scrapy.log.INFO)
+                   yield SoftwareItem(file_urls=[response.url])
+           else:
+               self.log(msg, level=scrapy.log.INFO)
+               yield SoftwareItem(file_urls=[response.url])
