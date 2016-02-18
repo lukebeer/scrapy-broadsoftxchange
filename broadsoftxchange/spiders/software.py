@@ -28,7 +28,7 @@ class SoftwareSpider(spiders.CrawlSpider):
                             yield scrapy.Request(url=next, method=settings.REQUEST_METHOD, callback=self.parse)
                     else:
                         yield scrapy.Request(url=next, method=settings.REQUEST_METHOD, callback=self.parse)
-        elif not settings.DOWNLOAD_DRYRUN:
+        elif not settings.DOWNLOAD_DRYRUN and settings.BROADWORKS_ARCH in response.url:
            if settings.BROADWORKS_RELEASE:
                if settings.BROADWORKS_RELEASE in response.url:
                    self.log(msg, level=scrapy.log.INFO)
