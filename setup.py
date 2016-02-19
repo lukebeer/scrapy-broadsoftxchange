@@ -16,6 +16,7 @@ setup(
     install_requires=[
         'distribute',
         'scrapy',
+        'psutil'
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
